@@ -34,6 +34,7 @@ const reducer = (state = initialState, action) => {
     case 'NEW_ANECDOTE': {
       return [...state, action.data]
     }
+   
     default:
       return state
   }
@@ -59,6 +60,8 @@ export const createAnecdote = content => {
     }
   }
 }
+
+
 
 
 
