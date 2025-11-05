@@ -1,3 +1,6 @@
+import { createSlice, current } from '@reduxjs/toolkit'
+
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
@@ -15,51 +18,32 @@ const asObject = anecdote => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
-const reducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
 
-  switch (action.type) {
-    case 'VOTE': {
-      const id = action.data.id
-      // return new state with updated votes for the anecdote with matching id
-      return state.map(anecdote =>
-        anecdote.id !== id ? anecdote : { ...anecdote, votes: anecdote.votes + 1 }
-      )
+const anecdoteSlice = createSlice({
+  name: 'anecdotes',
+  initialState,
+  reducers: {
+    createAnecdote(state, action){
+      const content = action.payload
+      state.push({
+        content,
+        id: getId(),
+        votes: 0
+      })
+    },
+    voteAnecdote (state, action){
+      const id = action.payload
+      const anecdoteToChange = state.find(anecdote => anecdote.id === id)
+      console.log(current(state))
+      if(anecdoteToChange){
+        anecdoteToChange.votes++
+      }
     }
-    case 'NEW_ANECDOTE': {
-      return [...state, action.data]
-    }
-   
-    default:
-      return state
+
   }
-}
-
-// action creator for voting an anecdote
-export const voteAnecdote = id => {
-  return {
-    type: 'VOTE',
-    data: { id }
-  }
-}
+})
 
 
-// action creator for new anecdote
-export const createAnecdote = content => {
-  return {
-    type: 'NEW_ANECDOTE',
-    data: {
-      content,
-      id: getId(),
-      votes: 0
-    }
-  }
-}
+export const { createAnecdote, voteAnecdote} = anecdoteSlice.actions
 
-
-
-
-
-
-export default reducer
+export default anecdoteSlice.reducer
