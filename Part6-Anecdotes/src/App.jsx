@@ -3,6 +3,7 @@
 import AddAnecdoteForm from './components/AddAnecdoteForm'
 import AnecdotesList from './components/AnecdotesList'
 import Filter from './components/Filter'
+import Notification from './components/Notification'
 
 
 const App = () => {
@@ -14,9 +15,11 @@ const App = () => {
       <h2>create new</h2>
       <AddAnecdoteForm />
 
-  <h2>Anecdotes</h2>
-  <Filter />
-  <AnecdotesList />
+      <h2>Anecdotes</h2>
+      <Filter />
+      <AnecdotesList />
+
+      <Notification />
 
     </div>
   )
