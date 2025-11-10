@@ -9,8 +9,7 @@ import Filter from './components/Filter'
 import Notification from './components/Notification'
 
 //imports
-import { setAcnecdotes } from './reducers/anecdoteReducer'
-import anecdoteService from './services/anecdotes'
+import { initializeAnecdotes } from './reducers/anecdoteReducer'
 
 
 const App = () => {
@@ -18,7 +17,7 @@ const App = () => {
   const dispatch = useDispatch()
 
    useEffect(() => {
-    anecdoteService.getAll().then(anecdotes => dispatch(setAcnecdotes(anecdotes)))
+  dispatch(initializeAnecdotes())
   }, [dispatch])
 
   /* it is considered good programming practice to add all variables and functions used inside the useEffect hook 
