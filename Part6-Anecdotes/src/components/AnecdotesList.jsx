@@ -1,6 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { voteAnecdote } from '../reducers/anecdoteReducer'
-import { setNotification, clearNotification } from '../reducers/notificationReducer'
+import { showNotification } from '../reducers/notificationReducer'
+
+
+import {updateAnecdote, initializeAnecdotes} from '../reducers/anecdoteReducer'
 
 
 const AnecdotesList = () => {
@@ -11,11 +13,9 @@ const AnecdotesList = () => {
 
     const vote = anecdote => {
         // dispatch an action to increment votes in the Redux store
-        dispatch(voteAnecdote(anecdote.id))
-        dispatch(setNotification(`You voted '${anecdote.content}'`))
-        setTimeout(() => {
-            dispatch(clearNotification())
-        }, 5000)
+       dispatch(updateAnecdote(anecdote))
+        dispatch(showNotification(`you voted '${anecdote.content}'`, 4))
+      
     }
 
     // apply text filter (case-insensitive)

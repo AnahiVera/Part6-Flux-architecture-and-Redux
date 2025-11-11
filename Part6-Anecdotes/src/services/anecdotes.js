@@ -30,7 +30,25 @@ const createAnecdote = async (content) => {
     return await response.json()
 }
 
-export default { getAll, createAnecdote }
+const updateAnecdote = async (id, updatedAnecdote) => {
+    const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedAnecdote) // Envía el objeto completo
+    })
+
+    if (!response.ok) {
+        throw new Error('Failed to update anecdote')
+    }
+
+    return await response.json()
+}
+
+
+
+
+
+export default { getAll, createAnecdote, updateAnecdote }
 
 
 /* fetch does not automatically convert any data included in the 

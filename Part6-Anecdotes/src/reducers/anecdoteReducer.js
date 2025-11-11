@@ -35,7 +35,7 @@ const anecdoteSlice = createSlice({
   )
 },
     
- setAcnecdotes(state, action) {
+ setAnecdotes(state, action) {
       return action.payload
     }
 
@@ -43,12 +43,12 @@ const anecdoteSlice = createSlice({
 })
 
 // action creator for using server datas/actions
-const { setAcnecdotes } = anecdoteSlice.actions
+const { createAnecdote, voteAnecdote, setAnecdotes  } = anecdoteSlice.actions
 
 export const initializeAnecdotes = () => {
   return async (dispatch) => {
     const anecdotes = await anecdoteService.getAll()
-    dispatch(setAcnecdotes(anecdotes))
+    dispatch(setAnecdotes(anecdotes))
   }
 }
 
@@ -59,7 +59,22 @@ export const appendAnecdote = (content) => {
   }
 }
 
+// actualizar (votar) una anécdota
+export const updateAnecdote = (anecdote) => {
+  return async (dispatch) => {
+    const updatedAnecdote = {
+      ...anecdote,
+      votes: anecdote.votes + 1
+    }
+    const returnedAnecdote = await anecdoteService.updateAnecdote(
+      anecdote.id,
+      updatedAnecdote
+    )
+    dispatch(voteAnecdote(returnedAnecdote))
+  }
+}
 
-export const {  voteAnecdote} = anecdoteSlice.actions
+
+
 
 export default anecdoteSlice.reducer
